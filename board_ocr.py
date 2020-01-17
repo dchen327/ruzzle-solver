@@ -1,4 +1,14 @@
 """
+A class for grabbing information about a ruzzle board screenshot
+
+Constants are defined in config.py and vary for each device. A pretrained
+pytesseract model is also required; this should be stored as 
+/usr/share/tesseract-ocr/4.00/tessdata/Alte.traineddata. Alte is used because
+it most nearly matches the font used in Ruzzle. If DEBUG is enabled in config.py, 
+all 16 crops will be stored in MAIN_DIR with names of the format 'xy.png'. This 
+is useful for finding the values of constants for cropping, since pytesseract can 
+be inaccurate when the letters are improperly cropped.
+
 Author: David Chen
 """
 import config as cf
@@ -6,9 +16,11 @@ from PIL import Image
 import pytesseract
 from pathlib import Path
 
+
 class BoardOCR:
 
     def __init__(self, file_path=cf.MAIN_DIR / cf.PATH_TO_IMG):
+        """ Opens the screenshot, then gets letters and multipliers """
         self.image = Image.open(file_path)
         self.board = self.get_board()
         self.word_mults = self.get_mults()
@@ -70,6 +82,6 @@ class BoardOCR:
         return self.board, self.word_mults
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # for testing
     boardOCR = BoardOCR(cf.MAIN_DIR / cf.PATH_TO_IMG)
     print(boardOCR.get_info())
