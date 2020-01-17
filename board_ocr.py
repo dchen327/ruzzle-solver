@@ -82,6 +82,6 @@ class BoardOCR:
         return self.board, self.word_mults
 
 
-if __name__ == '__main__':  # for testing
+if __name__ == '__main__':  # for testing - prints information about a board
     boardOCR = BoardOCR(cf.MAIN_DIR / cf.PATH_TO_IMG)
     print(boardOCR.get_info())
