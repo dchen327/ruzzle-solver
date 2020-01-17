@@ -1,5 +1,5 @@
 """
-A class for grabbing information about a ruzzle board screenshot
+A class for grabbing information about a ruzzle board screenshot.
 
 Constants are defined in config.py and vary for each device. A pretrained
 pytesseract model is also required; this should be stored as 
