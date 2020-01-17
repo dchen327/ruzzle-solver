@@ -1,7 +1,9 @@
 """
 A class for writing commands to a file, which can then be run on a phone.
 
-Constants are defined in config.py
+Constants are defined in config.py, such as file paths and coordinates for
+swiping. The class requires the dictionary words_info, which contains for each 
+word a tuple (score, path).
 
 Author: David Chen
 """
