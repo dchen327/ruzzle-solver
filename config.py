@@ -24,7 +24,6 @@ MULT_X0, MULT_Y0 = 60, 890  # coords of multiplier of top left letter
 
 """ BoardSolver settings """
 PRINT_INFO = True
-PATH_TO_BOARD = "board.txt"
 
 # Ruzzle Rules
 MIN_WORD_LEN = 2
