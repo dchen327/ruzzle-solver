@@ -1,4 +1,11 @@
 """
+A class to solve ruzzle boards and find words sorted by score.
+
+Constants are defined in config.py, and some of these can be tweaked for 
+performance. This class can also be used as a standalone program, and can write 
+words to a file if provided a board.txt file containing information about the 
+board.
+
 Author: David Chen
 """
 import config as cf

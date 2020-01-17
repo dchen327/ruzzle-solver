@@ -11,7 +11,7 @@ from pathlib import Path
 """ BoardOCR settings """
 DEBUG = False  # save individual crops for tweaking widths/heights
 MAIN_DIR = Path('./')
-PATH_TO_IMG = 'boards/board6.png'
+PATH_TO_IMG = 'ruzzletest.png'
 
 # OCR constants
 OCR_CONFIG = r'--psm 10'  # char only
