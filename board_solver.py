@@ -214,5 +214,5 @@ if __name__ == '__main__':  # for testing - reads board from 'board.txt' and wri
     PREFIXES = get_prefixes()
 
     # Solving
-    boardSolver = BoardSolver.open(cf.MAIN_DIR / "board.txt")
-    boardSolver.write_words_to_file(print_info=cf.PRINT_INFO)
+    boardSolver = BoardSolver.open(cf.MAIN_DIR / 'board.txt')
+    boardSolver.write_words_to_file(print_info=True)
