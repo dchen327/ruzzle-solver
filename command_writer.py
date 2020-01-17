@@ -1,4 +1,8 @@
 """
+A class for writing commands to a file, which can then be run on a phone.
+
+Constants are defined in config.py
+
 Author: David Chen
 """
 import config as cf

@@ -23,7 +23,7 @@ MULT_X0, MULT_Y0 = 60, 890  # coords of multiplier of top left letter
 
 
 """ BoardSolver settings """
-PRINT_INFO = True
+PRINT_INFO = False  # prints info about board when writing words to file
 
 # Ruzzle Rules
 MIN_WORD_LEN = 2

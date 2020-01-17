@@ -1,22 +1,10 @@
 """
 Author: David Chen
 """
+import config as cf
 from collections import defaultdict
 from pathlib import Path
 
-""" Configure program settings """
-MAIN_DIR = Path('./')
-PATH_TO_BOARD = "board.txt"
-PRINT_INFO = True
-
-""" Ruzzle Rules """
-MIN_WORD_LEN = 2
-MAX_WORD_LEN = 12
-BOARD_SIZE = 4
-
-""" These options can be tweaked to improve performance if necessary."""
-PREFIX_LOWER_BOUND = 2
-PREFIX_UPPER_BOUND = 8
 
 """ These store the dictionary and prefixes at run time. """
 DICTIONARY = None
@@ -27,7 +15,7 @@ class BoardSolver:
     __slots__ = ["board", "word_mults", "board_size", "word_int_mults",
                  "points", "graph", "possible_words", "words_info"]
 
-    def __init__(self, board, word_mults, board_size=None):
+    def __init__(self, board, word_mults, board_size=cf.BOARD_SIZE):
         if board_size is None:
             board_size = len(board)
 
@@ -48,7 +36,7 @@ class BoardSolver:
             PREFIXES = get_prefixes()
 
     @classmethod
-    def open(cls, file_path=MAIN_DIR / "board.txt", board_size=None):
+    def open(cls, file_path=cf.MAIN_DIR / "board.txt", board_size=None):
         """ Read board from board.txt. If board_size is not set, will automatically infer the size based on the first
         line of text. Expects an empty line between the board letters and the board multiplier information."""
 
@@ -64,7 +52,7 @@ class BoardSolver:
             return cls(board, word_mults, board_size)
 
     @classmethod
-    def solve_file(cls, file_path=MAIN_DIR / "board.txt", board_size=None):
+    def solve_file(cls, file_path=cf.MAIN_DIR / "board.txt", board_size=None):
         board = cls.open(file_path, board_size)
         return board.all_combos()
 
@@ -73,7 +61,7 @@ class BoardSolver:
         len_word = len(word)
 
         # store all >2 letter possible words in words_info if they are actual words
-        if len_word >= MIN_WORD_LEN and word in DICTIONARY:
+        if len_word >= cf.MIN_WORD_LEN and word in DICTIONARY:
             score = word_pts * word_mult
             bonus = 0 if len_word < 4 else 5 * (len_word - 4)  # length bonus
             self.possible_words.append((word, score + bonus, path[:]))  # append copy of path
@@ -89,13 +77,13 @@ class BoardSolver:
                 path[-1] = v  # add position to path list
                 temp_word = word + self.board[x][y]
 
-                if len_word >= MIN_WORD_LEN:
-                    if PREFIX_LOWER_BOUND <= len_word <= PREFIX_UPPER_BOUND\
-                            and temp_word not in PREFIXES[len_word - PREFIX_LOWER_BOUND]:
+                if len_word >= cf.MIN_WORD_LEN:
+                    if cf.PREFIX_LOWER_BOUND <= len_word <= cf.PREFIX_UPPER_BOUND\
+                            and temp_word not in PREFIXES[len_word - cf.PREFIX_LOWER_BOUND]:
                         continue
 
                     # there are no words greater than 12 letters (based on ruzzle database), so stop searching
-                    if len_word == MAX_WORD_LEN and temp_word in DICTIONARY:
+                    if len_word == cf.MAX_WORD_LEN and temp_word in DICTIONARY:
                         score = word_pts * word_mult
                         bonus = 0 if len_word < 4 else 5 * (len_word - 4)  # length bonus
                         self.possible_words.append((word, score + bonus, path))  # append copy of path
@@ -117,9 +105,9 @@ class BoardSolver:
         if self.possible_words:
             return self.possible_words
 
-        for x in range(BOARD_SIZE):
-            for y in range(BOARD_SIZE):
-                visited = {(i, j): False for i in range(BOARD_SIZE) for j in range(BOARD_SIZE)}
+        for x in range(cf.BOARD_SIZE):
+            for y in range(cf.BOARD_SIZE):
+                visited = {(i, j): False for i in range(cf.BOARD_SIZE) for j in range(cf.BOARD_SIZE)}
                 self.dfs(visited, (x, y), self.board[x][y], self.points[x][y], self.word_int_mults[x][y], [(x, y)])
         return self.possible_words
 
@@ -147,7 +135,7 @@ class BoardSolver:
             self.all_combos()
             self.check_words()
 
-        with open(MAIN_DIR / 'words.txt', 'w') as words_file:
+        with open(cf.MAIN_DIR / 'words.txt', 'w') as words_file:
             # take words_info and sort by score first, then sort by length
             # words_info.items() is a list of tuples: [(word, (score, path)) ...]
             high_scores = sorted(self.words_info.items(), key=lambda x: (-x[1][0], len(x[0])))
@@ -207,24 +195,24 @@ class BoardSolver:
 
 def get_dict():
     """ Returns set of words in dictionary (checking to see if a word is in a set is faster than a list) """
-    dict_file = MAIN_DIR / 'TWL06Trimmed.txt'
+    dict_file = cf.MAIN_DIR / 'TWL06Trimmed.txt'
     return set(open(dict_file).read().splitlines())
 
 
 def get_prefixes():
     """ Returns a list of lists of prefixes of a certain number of letters """
     prefixes = []
-    for i in range(PREFIX_LOWER_BOUND, PREFIX_UPPER_BOUND + 1):
-        with open(MAIN_DIR / f'prefixes{i}L.txt') as file:
+    for i in range(cf.PREFIX_LOWER_BOUND, cf.PREFIX_UPPER_BOUND + 1):
+        with open(cf.MAIN_DIR / f'prefixes{i}L.txt') as file:
             prefixes.append(set(file.read().splitlines()))
     return prefixes
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # for testing - reads board from 'board.txt' and writes words to file
     # Reading data
     DICTIONARY = get_dict()
     PREFIXES = get_prefixes()
 
     # Solving
-    boardSolver = BoardSolver.open(MAIN_DIR / "board.txt")
-    boardSolver.write_words_to_file(print_info=PRINT_INFO)
+    boardSolver = BoardSolver.open(cf.MAIN_DIR / "board.txt")
+    boardSolver.write_words_to_file(print_info=cf.PRINT_INFO)
