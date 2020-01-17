@@ -2,9 +2,15 @@
 A class to solve ruzzle boards and find words sorted by score.
 
 Constants are defined in config.py, and some of these can be tweaked for 
-performance. This class can also be used as a standalone program, and can write 
-words to a file if provided a board.txt file containing information about the 
-board.
+performance. 
+
+This class can also be used as a standalone program, and can write words to a
+file if provided a board.txt file containing information about the board. The 
+first 4 lines of board.txt should contain the letters of the board, all caps and
+separated by spaces. Line 5 is blank, and lines 6-9 contain information about 
+multipliers. 2, 3, D, T, and - are DW, TW, DL, TL, and nothing respectively. 
+If you don't want to input multipliers just set all 16 characters 
+to '-' (scores and word order won't be accurate).
 
 Author: David Chen
 """
