@@ -1,4 +1,9 @@
 """
+A program to solve Ruzzle boards and write gesture commands to a file
+
+Ensure that the files for BoardOCR, BoardSolver, and CommandWriter are in the 
+same directory.
+
 Author: David Chen
 """
 from board_ocr import BoardOCR
