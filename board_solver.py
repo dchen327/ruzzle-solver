@@ -6,10 +6,10 @@ performance.
 
 This class can also be used as a standalone program, and can write words to a
 file if provided a board.txt file containing information about the board. The 
-first 4 lines of board.txt should contain the letters of the board, all caps and
-separated by spaces. Line 5 is blank, and lines 6-9 contain information about 
-multipliers. 2, 3, D, T, and - are DW, TW, DL, TL, and nothing respectively. 
-If you don't want to input multipliers just set all 16 characters 
+first 4 lines of board.txt should contain the letters of the board, all caps 
+and separated by spaces. Line 5 is blank, and lines 6-9 contain information 
+about multipliers. 2, 3, D, T, and - are DW, TW, DL, TL, and nothing 
+respectively. If you don't want to input multipliers just set all 16 characters 
 to '-' (scores and word order won't be accurate).
 
 Author: David Chen
@@ -229,3 +229,4 @@ if __name__ == '__main__':  # for testing - reads board from 'board.txt' and wri
     # Solving
     boardSolver = BoardSolver.open(cf.MAIN_DIR / 'board.txt')
     boardSolver.write_words_to_file(print_info=True)
+    
