@@ -23,6 +23,7 @@ MULT_X0, MULT_Y0 = 60, 890  # coords of multiplier of top left letter
 
 
 """ BoardSolver settings """
+PREFIX_DIR = 'prefix_files'
 PRINT_INFO = False  # prints info about board when writing words to file
 
 # Ruzzle Rules

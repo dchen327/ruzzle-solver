@@ -216,7 +216,7 @@ def get_prefixes():
     """ Returns a list of lists of prefixes of a certain number of letters """
     prefixes = []
     for i in range(cf.PREFIX_LOWER_BOUND, cf.PREFIX_UPPER_BOUND + 1):
-        with open(cf.MAIN_DIR / f'prefixes{i}L.txt') as file:
+        with open(cf.MAIN_DIR / cf.PREFIX_DIR/ f'prefixes{i}L.txt') as file:
             prefixes.append(set(file.read().splitlines()))
     return prefixes
 
