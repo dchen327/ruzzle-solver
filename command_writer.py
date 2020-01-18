@@ -47,10 +47,12 @@ class CommandWriter:
         return commands
 
     @staticmethod
-    def mid_swipe(commands, x, y):
-        # send coordinates
-        commands += f'sendevent /dev/input/event2 0003 53 {x};'
-        commands += f'sendevent /dev/input/event2 0003 54 {y};'
+    def mid_swipe(commands, x=-1, y=-1):
+        # send coordinates, if x is -1 send y and keep x from previous command
+        if x != -1:
+            commands += f'sendevent /dev/input/event2 0003 53 {x};'
+        if y != -1:
+            commands += f'sendevent /dev/input/event2 0003 54 {y};'
         # end command train
         commands += 'sendevent /dev/input/event2 0000 0 0;'
         return commands
@@ -70,8 +72,13 @@ class CommandWriter:
         for path in path_list:
             commands = CommandWriter.start_swipe(commands, cf.CHAR_MID_X0+cf.GAP_X *
                                                  path[0][1], cf.CHAR_MID_Y0+cf.GAP_Y*path[0][0])  # initialize swipe
-            for x, y in path[1:]:
-                commands = CommandWriter.mid_swipe(commands, cf.CHAR_MID_X0+cf.GAP_X*y, cf.CHAR_MID_Y0+cf.GAP_Y*x)
+            for i, (x, y) in enumerate(path[1:], start=1):
+                if x == path[i-1][0]:  # same x coord, only send y
+                    commands = CommandWriter.mid_swipe(commands, y=cf.CHAR_MID_Y0+cf.GAP_Y*x)
+                elif y == path[i-1][1]:  # same y coord, only send x
+                    commands = CommandWriter.mid_swipe(commands, x=cf.CHAR_MID_X0+cf.GAP_X*y)
+                else:  # send (x, y)
+                    commands = CommandWriter.mid_swipe(commands, cf.CHAR_MID_X0+cf.GAP_X*y, cf.CHAR_MID_Y0+cf.GAP_Y*x)
             commands = CommandWriter.end_swipe(commands)
 
         with open(cf.MAIN_DIR / cf.PATH_TO_COMMANDS, 'w') as file:
