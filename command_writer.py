@@ -72,13 +72,13 @@ class CommandWriter:
         for path in path_list:
             commands = CommandWriter.start_swipe(commands, cf.CHAR_MID_X0+cf.GAP_X *
                                                  path[0][1], cf.CHAR_MID_Y0+cf.GAP_Y*path[0][0])  # initialize swipe
-            for i, (x, y) in enumerate(path[1:], start=1):
-                if x == path[i-1][0]:  # same x coord, only send y
-                    commands = CommandWriter.mid_swipe(commands, y=cf.CHAR_MID_Y0+cf.GAP_Y*x)
-                elif y == path[i-1][1]:  # same y coord, only send x
-                    commands = CommandWriter.mid_swipe(commands, x=cf.CHAR_MID_X0+cf.GAP_X*y)
+            for i, (y, x) in enumerate(path[1:], start=1):
+                if x == path[i-1][1]:  # same x coord, only send y
+                    commands = CommandWriter.mid_swipe(commands, y=cf.CHAR_MID_Y0+cf.GAP_Y*y)
+                elif y == path[i-1][0]:  # same y coord, only send x
+                    commands = CommandWriter.mid_swipe(commands, x=cf.CHAR_MID_X0+cf.GAP_X*x)
                 else:  # send (x, y)
-                    commands = CommandWriter.mid_swipe(commands, cf.CHAR_MID_X0+cf.GAP_X*y, cf.CHAR_MID_Y0+cf.GAP_Y*x)
+                    commands = CommandWriter.mid_swipe(commands, cf.CHAR_MID_X0+cf.GAP_X*x, cf.CHAR_MID_Y0+cf.GAP_Y*y)
             commands = CommandWriter.end_swipe(commands)
 
         with open(cf.MAIN_DIR / cf.PATH_TO_COMMANDS, 'w') as file:

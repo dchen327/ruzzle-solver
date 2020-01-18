@@ -48,6 +48,9 @@ class BoardSolver:
         if PREFIXES is None:
             PREFIXES = get_prefixes()
 
+        self.all_combos()
+        self.check_words()
+
     @classmethod
     def open(cls, file_path=cf.MAIN_DIR / "board.txt", board_size=None):
         """ Read board from board.txt. If board_size is not set, will automatically infer the size based on the first
