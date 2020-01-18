@@ -37,7 +37,7 @@ class CommandWriter:
     @staticmethod
     def start_swipe(commands, x, y):
         # start swipe movement
-        commands += 'sendevent /dev/input/event2 0003 57 570;'  # finger down
+        commands += 'sendevent /dev/input/event2 0003 57 50000;'  # finger down
         commands += 'sendevent /dev/input/event2 0001 330 1;'
         # send coordinates
         commands += f'sendevent /dev/input/event2 0003 53 {x};'
