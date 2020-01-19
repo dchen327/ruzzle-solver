@@ -15,3 +15,4 @@ if __name__ == '__main__':
     board, word_mults = boardOCR.get_info()
     boardSolver = BoardSolver(board, word_mults)
     commandWriter = CommandWriter(boardSolver.words_info)
+    
