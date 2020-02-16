@@ -9,6 +9,10 @@ safely ignored.
 Here's an image of the code in action: the board is in the top right and the words are outputted in words.txt.
 ![ruzzle_bare_minimum](https://user-images.githubusercontent.com/37674516/72667695-99958700-39ec-11ea-8e69-4a537e46a425.png)
 
+Here's the full program running on a rooted android:
+
+![ruzzle](https://user-images.githubusercontent.com/37674516/74607557-d1552480-50a7-11ea-8591-41200e75c6fb.gif)
+
 
 ## Contributors
 dchen327  
