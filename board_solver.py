@@ -1,23 +1,21 @@
 """
 A class to solve ruzzle boards and find words sorted by score.
 
-Constants are defined in config.py, and some of these can be tweaked for 
-performance. 
+Constants are defined in config.py, and some of these can be tweaked for
+performance.
 
 This class can also be used as a standalone program, and can write words to a
-file if provided a board.txt file containing information about the board. The 
-first 4 lines of board.txt should contain the letters of the board, all caps 
-and separated by spaces. Line 5 is blank, and lines 6-9 contain information 
-about multipliers. 2, 3, D, T, and - are DW, TW, DL, TL, and nothing 
-respectively. If you don't want to input multipliers just set all 16 characters 
+file if provided a board.txt file containing information about the board. The
+first 4 lines of board.txt should contain the letters of the board, all caps
+and separated by spaces. Line 5 is blank, and lines 6-9 contain information
+about multipliers. 2, 3, D, T, and - are DW, TW, DL, TL, and nothing
+respectively. If you don't want to input multipliers just set all 16 characters
 to '-' (scores and word order won't be accurate).
 
 Author: David Chen
 """
 import config as cf
 from collections import defaultdict
-from pathlib import Path
-
 
 """ These store the dictionary and prefixes at run time. """
 DICTIONARY = None
@@ -52,17 +50,16 @@ class BoardSolver:
         self.check_words()
 
     @classmethod
-    def open(cls, file_path=cf.MAIN_DIR / "board.txt", board_size=None):
-        """ Read board from board.txt. If board_size is not set, will automatically infer the size based on the first
+    def open(cls, file_path=cf.MAIN_DIR / "board.txt", board_size=4):
+        """ Read board from board.txt. If board_size is not set, will automatically infer the size based on the firstN
         line of text. Expects an empty line between the board letters and the board multiplier information."""
 
         with open(file_path) as file:
             lines = file.read().splitlines()
 
-            if board_size is None:
-                board_size = len(lines[0].split())
-
-            board = [row.split() for row in lines[:board_size]]
+            board = []
+            for row in lines[:board_size]:
+                board.append([l.upper() for l in row if l.isalpha()])
             word_mults = [row.split() for row in lines[board_size + 1: 2 * board_size + 1]]
 
             return cls(board, word_mults, board_size)
@@ -219,7 +216,7 @@ def get_prefixes():
     """ Returns a list of lists of prefixes of a certain number of letters """
     prefixes = []
     for i in range(cf.PREFIX_LOWER_BOUND, cf.PREFIX_UPPER_BOUND + 1):
-        with open(cf.MAIN_DIR / cf.PREFIX_DIR/ f'prefixes{i}L.txt') as file:
+        with open(cf.MAIN_DIR / cf.PREFIX_DIR / f'prefixes{i}L.txt') as file:
             prefixes.append(set(file.read().splitlines()))
     return prefixes
 
@@ -232,4 +229,3 @@ if __name__ == '__main__':  # for testing - reads board from 'board.txt' and wri
     # Solving
     boardSolver = BoardSolver.open(cf.MAIN_DIR / 'board.txt')
     boardSolver.write_words_to_file(print_info=True)
-    
